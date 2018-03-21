@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Add a book!</title>
+        {% load static %}
+        <link rel="stylesheet" types="text/css" href="{% static "books/style.css" %}">
+    </head>
+    <body>
+        <div class='container'>
+            <a class="btn" href='/books'>Home</a>
+            <a class="btn" href='/logout'>Log Out</a>
+            <h1>Add a New Book Title and a Review:</h1>
+            {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="/books/create" method="POST">
+                {% csrf_token %}
+                <label for="title">Book Title:
+                    <input type="text" name="title">
+                </label>
+                <label for="name">Author:
+                    <input type="text" name="name">
+                </label>
+                <label for="review">Review:
+                    <input type="text" name="review">
+                </label>
+                <br>
+                <label for="rating">Rating: 
+                    <select name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select> Stars
+                </label>
+                <br>
+                <input type="submit" value="Add Book and Review">
+            </form>
+        </div>
+    </body>
+</html>
