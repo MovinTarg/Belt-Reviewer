@@ -24,8 +24,16 @@
                 <label for="title">Book Title:
                     <input type="text" name="title">
                 </label>
-                <label for="name">Author:
-                    <input type="text" name="name">
+                <label for="review">Choose from the list:
+                <select name="author1">
+                    <option value="">Choose From List</option>
+                    {% for author in authors %}
+                    <option value="{{ author.name }}">{{ author.name }}</option>
+                    {% endfor %}
+                </select>
+                </label>
+                <label for="review">Or add a new author:
+                    <input type="text" name="author2">
                 </label>
                 <label for="review">Review:
                     <input type="text" name="review">

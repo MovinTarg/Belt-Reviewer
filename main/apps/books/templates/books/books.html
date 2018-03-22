@@ -12,12 +12,16 @@
             <a class="btn" href='/books'>Home</a>
             <a class="btn" href='/logout'>Log Out</a>
             <div class="body">
-                {{ title }}
-                {{ author }}
+                {{ books.title }}
+                {{ books.author }}
                 <div class="left">
                     <h2>Reviews:</h2>
                     <div class="reviews">
-
+                        {% for review in reviews %}
+                            <p class="rating">Rating: {{ review.rating }} stars</p>
+                            <p>{{ review.reviewer.first_name }} says: {{ review.review }}</p>
+                            <p>{{ review.created_at }}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <form action="/books/review" method="POST">

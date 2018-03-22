@@ -9,20 +9,27 @@
     </head>
     <body>
         <div class='container'>
-            <h1>Welcome, {{ name }}!</h1>
+            <h1>Welcome, {{ user_name }}!</h1>
             <a class="btn" href='/books/add'>Add Book and Review</a>
             <a class="btn" href='/logout'>Log Out</a>
             <div class="body">
                 <div class="left">
                     <h2>Recent Book Reviews</h2>
                     <div class="recent_reviews">
-
+                        {% for review in reviews %}
+                            <a href="/books/{{ review.books.id }}">{{ review.books.title }}</a>
+                            <p class="rating">Rating: {{ review.rating }} stars</p>
+                            <p>{{ review.reviewer.first_name }} says: {{ review.review }}</p>
+                            <p>{{ review.created_at }}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="right">
                     <h2>Other Books and Reviews</h2>
                     <div class="books_reviews">
-                        
+                        {% for book in books %}
+                        <a href="/books/{{ review.books.id }}">{{ book.title }}</a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -32,6 +32,21 @@ class UserManager(models.Manager):
         if postData['confirm_password'] != postData['password']:
             errors["password_does_not_match"] = "Passwords must match!"
         return errors
+    def login_validator(self, postData):
+        errors = {}
+        users = User.objects.all()
+        for user in users:
+            print user.email
+            print postData['email']
+            print '-------'
+            if user.email == postData['email']:
+                if bcrypt.checkpw(postData['password'].encode(), user.password.encode()) == True:
+                    break
+                else:
+                    errors['invalid_password'] = "Invalid Password!"
+            else:
+                errors['unregistered'] = "Invalid Email!"
+        return errors
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
