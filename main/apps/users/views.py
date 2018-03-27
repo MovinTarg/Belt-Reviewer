@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from ..books.models import *
 from .models import *
 
 # Create your views here.
@@ -33,10 +34,18 @@ def login(req):
     req.session['user_id'] = loggedUser.id
     return redirect('/books')
 
-def users(req, user_id):
+def users(req, reviewer_id):
+    tempBooks = []
+    reviews = Review.objects.filter(reviewer = reviewer_id)
+    for review in reviews:
+        if review.books not in tempBooks:
+            tempBooks.append(review.books)
     context = {
-        'user': User.objects.get(id = user_id)
+        'user': User.objects.get(id = reviewer_id),
+        'total_reviews': Review.objects.filter(reviewer = reviewer_id).count(),
+        'books_reviewed': tempBooks
     }
+    
     return render(req, 'users/users.html', context)
 
 def logout(req):

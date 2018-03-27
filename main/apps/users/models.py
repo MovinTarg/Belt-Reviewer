@@ -34,18 +34,14 @@ class UserManager(models.Manager):
         return errors
     def login_validator(self, postData):
         errors = {}
-        users = User.objects.all()
-        for user in users:
-            print user.email
-            print postData['email']
-            print '-------'
-            if user.email == postData['email']:
-                if bcrypt.checkpw(postData['password'].encode(), user.password.encode()) == True:
-                    break
-                else:
-                    errors['invalid_password'] = "Invalid Password!"
+        if not User.objects.filter(email=postData['email']):
+            errors['unregistered'] = "Invalid Email!"
+        else:
+            user = User.objects.get(email=postData['email'])
+            if bcrypt.checkpw(postData['password'].encode(), user.password.encode()) == True:
+                pass
             else:
-                errors['unregistered'] = "Invalid Email!"
+                errors['invalid_password'] = "Invalid Password!"
         return errors
 
 class User(models.Model):

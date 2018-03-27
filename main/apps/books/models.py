@@ -7,27 +7,20 @@ from ..users.models import *
 # Create your models here.
 class AuthorManager(models.Manager):
     def basic_validator(self, postData):
-        new_author = False
         errors = {}
         author = ''
-        if len(postData['author2']) < 1:
-            if not Book.objects.filter(authors=postData['author1']):
-                errors['no_author'] = "Please select or add an author"
-            if Book.objects.get(authors=postData['author1']):
-                author=postData['author1']
-        if len(postData['author2']) > 1:
-            author=postData['author2']
-        authors = Author.objects.all()
-        print authors
-        if not authors:
-            new_author = True
+        if not Author.objects.filter(name = postData['author_typed']):
+            if not Author.objects.filter(name = postData['author_scroll']):
+                if len(postData['author_typed']) < 1:
+                    errors['no_author'] = "Please select or add an author"
+                else:
+                    author = postData['author_typed']
+            else:
+                author = postData['author_scroll']
         else:
-            for saved_author in authors:
-                print 'saved: ', saved_author
-                print 'saved name: ', saved_author.name
-                if saved_author.name != author:
-                    new_author = True
-        return errors, author, new_author
+            author = postData['author_typed']
+        return errors, author
+
 class BookManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
@@ -58,7 +51,7 @@ class Book(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = BookManager()
 class Review(models.Model):
-    reviewer = models.ForeignKey(User)
+    reviewer = models.ForeignKey(User, related_name='book_reviewer')
     books = models.ForeignKey(Book, related_name='books_review')
     review = models.CharField(max_length=255)
     rating = models.IntegerField()

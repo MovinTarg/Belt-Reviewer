@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Reviewer</title>
+        {% load static %}
+        <link rel="stylesheet" types="text/css" href="{% static "users/style.css" %}">
+    </head>
+    <body>
+        <div class='container'>
+            <a class="btn" href='/books'>Home</a>
+            <a class="btn" href='/books/add'>Add Book and Review</a>
+            <a class="btn" href='/logout'>Log Out</a>
+            <h1>User Allias: {{ user.first_name }}</h1>
+            <p>User name: {{ user.first_name }} {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Total Reviews: {{ total_reviews }}</p>
+            <p>Posted Reviews on the following Books:</p>
+            <div class="books_reviews">
+                {% for book in books_reviewed %}
+                <a href="/books/{{ book.id }}">{{ book.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

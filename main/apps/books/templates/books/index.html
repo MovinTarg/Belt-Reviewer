@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Books</title>
+        <title>Recent Reviews and Books</title>
         {% load static %}
         <link rel="stylesheet" types="text/css" href="{% static "books/style.css" %}">
     </head>
@@ -19,8 +19,8 @@
                         {% for review in reviews %}
                             <a href="/books/{{ review.books.id }}">{{ review.books.title }}</a>
                             <p class="rating">Rating: {{ review.rating }} stars</p>
-                            <p>{{ review.reviewer.first_name }} says: {{ review.review }}</p>
-                            <p>{{ review.created_at }}</p>
+                            <p><a href="/users/{{ review.reviewer.id }}">{{ review.reviewer.first_name }}</a> says: {{ review.review }}</p>
+                            <p>Posted on: {{ review.created_at }}</p>
                         {% endfor %}
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     <h2>Other Books and Reviews</h2>
                     <div class="books_reviews">
                         {% for book in books %}
-                        <a href="/books/{{ review.books.id }}">{{ book.title }}</a>
+                        <a href="/books/{{ book.id }}">{{ book.title }}</a>
                         {% endfor %}
                     </div>
                 </div>

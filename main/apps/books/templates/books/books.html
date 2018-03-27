@@ -19,12 +19,15 @@
                     <div class="reviews">
                         {% for review in reviews %}
                             <p class="rating">Rating: {{ review.rating }} stars</p>
-                            <p>{{ review.reviewer.first_name }} says: {{ review.review }}</p>
-                            <p>{{ review.created_at }}</p>
+                            <p><a href="/users/{{ review.reviewer.id }}">{{ review.reviewer.first_name }}</a> says: {{ review.review }}</p>
+                            <p>Posted on: {{ review.created_at }}</p>
+                            {% if review.reviewer.id == user_id %}
+                                <a href="/books/{{ books.id }}/delete/{{ review.id }}">Delete this review</a>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-                <form action="/books/review" method="POST">
+                <form action="/books/{{ books.id }}/review" method="POST">
                     {% csrf_token %}
                     <label for="review">Add a Review:
                         <input type="text" name="review">
